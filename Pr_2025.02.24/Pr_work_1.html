@@ -1,0 +1,41 @@
+<html>
+    <head>
+        <script>
+            function findSolutions() {
+                let n = parseInt(steps.value);
+                let m = parseInt(maxJump.value);
+                let output = "Solutions with repetitions:\n";
+                let q_sol = 0;
+
+                // Знаходження всіх розв'язків з повтореннями; сума елементів розв'язку = n
+                for (let i = 1; i <= m; i++) {
+                    q_sol++;
+                    output += "(";
+                    let repeat = Math.floor(n / i);
+                    if (repeat > 1) {
+                        output += Array(repeat).fill(i).join(", ");
+                    } else {
+                        output += i;
+                    }
+                    if (n % i !== 0) {
+                        output += ", " + (n % i) + ")\n";
+                    } else {
+                        output += ")\n";
+                    }
+                }
+                // кількість розв'язків з повтореннями
+                output += "Quantity of solutions with repetitions: " + q_sol;
+                alert(output);        
+            }
+        </script>
+    </head>
+    <body>
+        <label for="steps">Enter quantity of steps:</label>
+        <input type="number" value="10" id="steps" min="1">
+        <br>
+        <label for="maxJump">Enter the MAX length of a rabbit's jump:</label>
+        <input type="number" value="3" id="maxJump" min="1">
+        <br>
+        <button onclick="findSolutions()">Find Solutions</button>
+    </body>
+</html>
