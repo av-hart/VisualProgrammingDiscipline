@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <script>
+            function del_gr() { // Оголошення функції для видалення групи
+            amm_gr = 0; // Ініціалізація змінної для підрахунку кількості груп
+            res_str = ""; // Створення порожнього рядка
+            res_str += "Обрати групу<select id = \"sel_d_gr\">"; // Додавання елемента випадаючого списку
+
+            GR = ADO.Execute("select * from GR"); // Запит для отримання всіх записів з таблиці GR
+
+            do {
+                mass_id_gr[amm_gr++] = GR.Fields(0).Value; // Збереження ID групи в масиві та збільшення лічильника
+                res_str += "<option>" + GR.Fields(1).Value; // Додавання назви групи до випадаючого списку
+            } while (GR.MoveNext(), !GR.EOF); // Перехід до наступного запису, поки не досягнуто кінця результату
+
+            res_str += "<\/select>"; // Закриття тега select
+            res_str += "<input type = \"button\" onClick = \"s_d_gr();\" value = \"Видалити\">"; // Додавання кнопки "Видалити"
+
+            m_div.innerHTML = res_str; // Вставка сформованого коду в елемент з ідентифікатором `m_div`
+            }
+
+            function s_d_gr() {// Оголошення функції для видалення вибраної групи
+            
+            GR = ADO.Execute("delete from GR where GR.id=" + mass_id_gr[main_form.sel_d_gr.selectedIndex] + ";"); 
+            // Запит для видалення вибраної групи з таблиці GR
+
+            GR = ADO.Execute("delete from PL where PL.id_gr=" + mass_id_gr[main_form.sel_d_gr.selectedIndex] + ";"); 
+            // Видалення всіх записів, пов'язаних з цією групою, з таблиці PL
+
+            alert("Запис про групу успішно видалені!!!"); // Виведення повідомлення про успішне видалення
+            }
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
