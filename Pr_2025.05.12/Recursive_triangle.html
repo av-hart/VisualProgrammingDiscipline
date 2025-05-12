@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Рекурсивний трикутник</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="myCanvas" width="650" height="650"></canvas>
+
+<script>
+    const canvas = document.getElementById("myCanvas");
+    const ctx = canvas.getContext("2d");
+
+    function midpoint(p1, p2) {
+        return (p1 + p2) / 2;
+    }
+
+    function draw_triangle(p1_x, p1_y, p2_x, p2_y, p3_x, p3_y) {
+        ctx.beginPath();
+        ctx.moveTo(p1_x, p1_y);
+        ctx.lineTo(p2_x, p2_y);
+        ctx.lineTo(p3_x, p3_y);
+        ctx.closePath();
+        ctx.stroke();
+    }
+
+    function result(p1_x, p1_y, p2_x, p2_y, p3_x, p3_y, n) {
+        if (n === 0) {
+            draw_triangle(p1_x, p1_y, p2_x, p2_y, p3_x, p3_y);
+        } else {
+            const m1_x = midpoint(p1_x, p2_x);
+            const m1_y = midpoint(p1_y, p2_y);
+            const m2_x = midpoint(p2_x, p3_x);
+            const m2_y = midpoint(p2_y, p3_y);
+            const m3_x = midpoint(p3_x, p1_x);
+            const m3_y = midpoint(p3_y, p1_y);
+
+            result(p1_x, p1_y, m1_x, m1_y, m3_x, m3_y, n - 1);
+            result(m1_x, m1_y, p2_x, p2_y, m2_x, m2_y, n - 1);
+            result(m3_x, m3_y, m2_x, m2_y, p3_x, p3_y, n - 1);
+        }
+    }
+
+    const margin = 50;
+
+    const p1_x = canvas.width / 2;
+    const p1_y = margin;
+
+    const p2_x = margin;
+    const p2_y = canvas.height - margin;
+
+    const p3_x = canvas.width - margin;
+    const p3_y = canvas.height - margin;
+
+    result(p1_x, p1_y, p2_x, p2_y, p3_x, p3_y, 6);
+
+    // Гарт А.
+</script>
+
+</body>
+</html>
